@@ -34,6 +34,7 @@ export default () => {
     (async function () {
       const response = await axios.get('https://randomuser.me/api');
       const data = response?.data?.results?.[0];
+      localStorage.setItem('data', JSON.stringify(data));
       setData(data);
     })();
   }, [handleRefresh]);
@@ -43,14 +44,30 @@ export default () => {
       <h2>Random User</h2>
       <img src={data?.picture?.large} alt={data?.gender} />
       <div className="first-section">
-        <div>Name: {`${data?.name?.first} ${data?.name?.last}`}</div>
-        <div>Email: {data?.email}</div>
-        <div>DOB: {moment(data?.dob?.date).format('LL')}</div>
+        <div>
+          <strong>Name:</strong> {`${data?.name?.first} ${data?.name?.last}`}
+        </div>
+        <div>
+          <strong>Email:</strong> {data?.email}
+        </div>
+        <div>
+          {' '}
+          <strong>DOB:</strong> {moment(data?.dob?.date).format('LL')}
+        </div>
       </div>
       <div className="second-section">
-        <div>Age: {data?.dob?.age}</div>
-        <div>Gender: {data?.gender}</div>
-        <div>Phone: {data?.phone}</div>
+        <div>
+          {' '}
+          <strong>Age:</strong> {data?.dob?.age}
+        </div>
+        <div>
+          {' '}
+          <strong>Gender:</strong> {data?.gender}
+        </div>
+        <div>
+          {' '}
+          <strong>Phone:</strong> {data?.phone}
+        </div>
       </div>
 
       <GoogleMap coordinates={data?.location?.coordinates} />
